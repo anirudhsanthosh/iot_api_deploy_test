@@ -1,0 +1,10 @@
+{
+    "device_id": "5f6d8b0b1d25c7ec181864d1",
+    "data": {
+        "temperature_DHT": 1,
+        "temperature_SCD4X": 1,
+        "humidity_DHT": 1,
+        "humidity_SCD4X": 1,
+        "co2_SCD4X": 1
+    }
+}

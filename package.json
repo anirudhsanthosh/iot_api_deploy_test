@@ -1,0 +1,44 @@
+{
+  "name": "iot_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prettier:cli": "prettier \"src/**/*.ts\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write -l",
+    "dev": "nodemon",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-iot-device-sdk": "^2.2.8",
+    "@types/body-parser": "^1.19.5",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.4",
+    "esbuild": "^0.24.0",
+    "esbuild-node-tsc": "^2.0.5",
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "@clerk/backend": "^1.13.5",
+    "@clerk/clerk-sdk-node": "^5.0.45",
+    "@mrspartak/promises": "^1.0.0",
+    "aws-crt": "^1.22.0",
+    "aws-iot-device-sdk": "^2.2.15",
+    "aws-iot-device-sdk-v2": "^1.21.1",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-async-errors": "^3.1.1",
+    "mongodb": "^6.9.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.2",
+    "zod": "^3.23.8"
+  }
+}
