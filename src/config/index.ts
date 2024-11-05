@@ -25,3 +25,5 @@ function createConfig() {
 }
 
 export const AppConfig = createConfig();
+
+console.log(JSON.stringify(AppConfig,null,4))
