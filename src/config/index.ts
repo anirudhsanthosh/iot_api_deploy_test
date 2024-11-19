@@ -7,8 +7,6 @@ dotenv.config();
 function createConfig() {
 	const env = process.env.NODE_ENV as Config.env;
 
-	console.log("process.env.NODE_ENV",process.env.NODE_ENV)
-
 	switch (env) {
 		case "development":
 			return DevelopmentConfig;
@@ -25,5 +23,3 @@ function createConfig() {
 }
 
 export const AppConfig = createConfig();
-
-console.log(JSON.stringify(AppConfig,null,4))

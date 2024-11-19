@@ -6,16 +6,20 @@ import { createFarm, farmAdminUpdate, getAdminFarms, getFarm, getFarms } from ".
 
 export const FarmRouter = Router();
 
-FarmRouter.use(createAuthMiddleware());
+const authGuard = createAuthMiddleware();
 
-FarmRouter.use(createUserInjectionMiddleware());
+const adminAuthGuard = createAdminAuthGuardMiddleware();
+
+const userInjectionMiddleware = createUserInjectionMiddleware();
+
+FarmRouter.use(authGuard, userInjectionMiddleware);
 
 FarmRouter.get("/farms/:farmId/", getFarm);
 
 FarmRouter.get("/farms", getFarms);
 
-FarmRouter.get("/admin/farms/", createAdminAuthGuardMiddleware(), getAdminFarms);
-
-FarmRouter.put("/admin/farms/", createAdminAuthGuardMiddleware(), farmAdminUpdate);
-
 FarmRouter.post("/farms", createFarm);
+
+FarmRouter.get("/admin/farms/", adminAuthGuard, getAdminFarms);
+
+FarmRouter.put("/admin/farms/", adminAuthGuard, farmAdminUpdate);

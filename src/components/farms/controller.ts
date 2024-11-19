@@ -13,8 +13,6 @@ export async function getFarms(request: Request, response: Response, next: NextF
 export async function getAdminFarms(request: Request, response: Response, next: NextFunction) {
 	const farms = await new FarmService().collection.find({}).toArray();
 
-	console.log({ farms });
-
 	response.json(farms ?? []);
 }
 

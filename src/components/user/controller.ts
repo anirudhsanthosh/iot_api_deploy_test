@@ -1,12 +1,20 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { UserService } from "./service";
 
 export async function getUser(request: Request, response: Response, next: NextFunction) {
-	const service = new UserService();
+	const userService = new UserService();
 
-	const auth = service.parseUserFromRequest(request);
+	const auth = userService.parseUserFromRequest(request);
 
-	const { isAdmin, ...user } = await service.getOrCreateIfNotExists(auth);
+	const { isAdmin, ...user } = await userService.getOrCreateIfNotExists(auth);
 
 	response.json(isAdmin ? { isAdmin, ...user } : user);
 }
+
+export const getAllUsersForAdmin: RequestHandler<{}> = async (request, response, next) => {
+	const userService = new UserService();
+
+	const users = await userService.collection.find({}).toArray();
+
+	response.json(users);
+};

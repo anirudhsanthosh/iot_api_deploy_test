@@ -24,7 +24,7 @@ export async function initServer() {
 		res.send(`Hey there it's lonely here..... 😔`);
 	});
 
-	app.use("/user", UserRouter);
+	app.use(UserRouter);
 
 	app.use(FarmRouter);
 

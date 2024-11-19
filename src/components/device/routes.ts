@@ -6,9 +6,13 @@ import { analytics, createDevice, deviceAdminUpdate, getDevice, getDevices, getD
 
 export const DeviceRouter = Router();
 
-DeviceRouter.use(createAuthMiddleware());
+const authGuard = createAuthMiddleware();
 
-DeviceRouter.use(createUserInjectionMiddleware());
+const adminAuthGuard = createAdminAuthGuardMiddleware();
+
+const userInjectionMiddleware = createUserInjectionMiddleware();
+
+DeviceRouter.use(authGuard, userInjectionMiddleware);
 
 //TODO add authorization for permission validations.
 
@@ -18,8 +22,8 @@ DeviceRouter.get("/devices/:farmId/:deviceId", getDevice);
 
 DeviceRouter.get("/devices/:farmId/:deviceId/analytics", analytics);
 
-DeviceRouter.get("/admin/devices", createAdminAuthGuardMiddleware(), getDevicesByAdmin);
+DeviceRouter.get("/admin/devices", adminAuthGuard, getDevicesByAdmin);
 
-DeviceRouter.put("/admin/devices/:deviceId", createAdminAuthGuardMiddleware(), deviceAdminUpdate);
+DeviceRouter.put("/admin/devices/:deviceId", adminAuthGuard, deviceAdminUpdate);
 
-DeviceRouter.post("/admin/devices/", createAdminAuthGuardMiddleware(), createDevice);
+DeviceRouter.post("/admin/devices/", adminAuthGuard, createDevice);

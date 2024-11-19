@@ -1,12 +1,21 @@
 import { Router } from "express";
+import { createAdminAuthGuardMiddleware } from "../../middlewares";
 import { createAuthMiddleware } from "../../middlewares/auth";
 import { createUserInjectionMiddleware } from "../../middlewares/user";
 import { getUser } from "./controller";
 
 export const UserRouter = Router();
 
-UserRouter.use(createAuthMiddleware());
+const authGuard = createAuthMiddleware();
 
-UserRouter.get("/", getUser);
+const adminAuthGuard = createAdminAuthGuardMiddleware();
 
-UserRouter.use(createUserInjectionMiddleware());
+const userInjectionMiddleware = createUserInjectionMiddleware();
+
+UserRouter.use(authGuard);
+
+UserRouter.get("/user", getUser);
+
+UserRouter.use(userInjectionMiddleware);
+
+UserRouter.get("/admin/users", adminAuthGuard);

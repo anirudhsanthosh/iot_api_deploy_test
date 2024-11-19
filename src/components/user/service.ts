@@ -3,7 +3,8 @@ import { Filter, ObjectId, UpdateFilter, UpdateOptions } from "mongodb";
 import { DB } from "../../services/db/service";
 
 export class UserService {
-	constructor(protected collection = DB().collection<Users.user>("users")) {}
+	constructor(public collection = DB().collection<Users.user>("users")) {}
+
 	async getOrCreateIfNotExists(user: Partial<Users.user> & Pick<Users.user, "clerkUserId" | "email">) {
 		const email = user.email;
 
