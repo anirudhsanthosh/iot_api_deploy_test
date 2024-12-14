@@ -1,9 +1,11 @@
 const fs = require("fs");
 
-const deviceId = "6700c0e7f16af29ef55661a8";
+const deviceId = "672aec297019134b5661bf69";
 const farmId = "6700a3ff20498545c4a70d44";
-const startTime = new Date().getTime();
+const startTime = new Date().getTime() - 1 * 24 * 60 * 60 * 1000;
 const interval = 5 * 60 * 1000; // 5 minutes
+
+const eventCount = 1000;
 
 function generateSampleData(numSamples) {
 	const sampleData = [];
@@ -38,7 +40,7 @@ function generateSampleData(numSamples) {
 }
 
 // Generate 100 samples
-const data = generateSampleData(100);
+const data = generateSampleData(eventCount);
 
 // Save to JSON file
 fs.writeFileSync("sample/sample_node_data.json", JSON.stringify(data, null, 2), "utf-8");
