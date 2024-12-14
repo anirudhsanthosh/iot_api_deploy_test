@@ -11,9 +11,52 @@ export async function getFarms(request: Request, response: Response, next: NextF
 }
 
 export async function getAdminFarms(request: Request, response: Response, next: NextFunction) {
-	const farms = await new FarmService().collection.find({}).toArray();
+	try {
+		const limit = parseInt(request.query.limit as string) || 100;
 
-	response.json(farms ?? []);
+		const offset = parseInt(request.query.offset as string) || 0;
+
+		const search = (request.query.search as string) || "";
+
+		const fields = (request.query.fields as string) || ""; // comma-separated fields
+
+		const sortBy = (request.query.sortBy as string) || "name";
+
+		const sortOrder = (request.query.sortOrder as string)?.toLowerCase() === "desc" ? -1 : 1;
+
+		const filters: Record<string, any> = {};
+
+		// Search by farm name (case-insensitive)
+		if (search) {
+			filters.name = { $regex: search, $options: "i" };
+		}
+
+		// Exclude soft-deleted farms
+		filters.deleted_at = { $eq: null };
+
+		// Projection (fields to return)
+		const projection = fields
+			? fields.split(",").reduce(
+					(acc, field) => {
+						acc[field.trim()] = 1;
+						return acc;
+					},
+					{} as Record<string, number>,
+				)
+			: {};
+
+		// Query farms with filters, sorting, pagination, and projection
+		const farms = await new FarmService().collection
+			.find(filters, { ...(projection && { projection }) })
+			.sort({ [sortBy]: sortOrder })
+			.skip(offset)
+			.limit(limit)
+			.toArray();
+
+		response.json(farms);
+	} catch (error) {
+		next(error);
+	}
 }
 
 export async function farmAdminUpdate(request: Request, response: Response, next: NextFunction) {

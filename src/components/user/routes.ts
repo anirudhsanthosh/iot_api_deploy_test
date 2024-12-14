@@ -2,7 +2,7 @@ import { Router } from "express";
 import { createAdminAuthGuardMiddleware } from "../../middlewares";
 import { createAuthMiddleware } from "../../middlewares/auth";
 import { createUserInjectionMiddleware } from "../../middlewares/user";
-import { getUser } from "./controller";
+import { getAllUsersForAdmin, getUser } from "./controller";
 
 export const UserRouter = Router();
 
@@ -18,4 +18,4 @@ UserRouter.get("/user", getUser);
 
 UserRouter.use(userInjectionMiddleware);
 
-UserRouter.get("/admin/users", adminAuthGuard);
+UserRouter.get("/admin/users", adminAuthGuard, getAllUsersForAdmin);

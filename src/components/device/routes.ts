@@ -22,8 +22,10 @@ DeviceRouter.get("/devices/:farmId/:deviceId", getDevice);
 
 DeviceRouter.get("/devices/:farmId/:deviceId/analytics", analytics);
 
-DeviceRouter.get("/admin/devices", adminAuthGuard, getDevicesByAdmin);
+DeviceRouter.use(adminAuthGuard);
 
-DeviceRouter.put("/admin/devices/:deviceId", adminAuthGuard, deviceAdminUpdate);
+DeviceRouter.get("/admin/devices", getDevicesByAdmin);
 
-DeviceRouter.post("/admin/devices/", adminAuthGuard, createDevice);
+DeviceRouter.put("/admin/devices/:deviceId", deviceAdminUpdate);
+
+DeviceRouter.post("/admin/devices/", createDevice);

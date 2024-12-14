@@ -4,6 +4,7 @@ import "express-async-errors";
 import { DeviceRouter, FarmRouter, UserRouter } from "./components";
 import { AnalyticsRouter } from "./components/analytics/routes";
 import { MockRouter } from "./components/mock";
+import { NotificationRouter } from "./components/notifications/routes";
 import { createCorsMiddleware, createErrorHandlerMiddleware } from "./middlewares";
 import { initDb } from "./services";
 
@@ -33,6 +34,8 @@ export async function initServer() {
 	app.use(AnalyticsRouter);
 
 	app.use(MockRouter);
+
+	app.use(NotificationRouter);
 
 	app.use(createErrorHandlerMiddleware());
 
